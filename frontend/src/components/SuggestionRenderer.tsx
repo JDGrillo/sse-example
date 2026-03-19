@@ -56,13 +56,13 @@ export const SuggestionRenderer: React.FC<SuggestionRendererProps> = ({
 
   const getDisplayTypeIcon = (type: Correction['type']) => {
     const iconMap = {
-      grammar: '📝',
-      spelling: '✏️',
-      style: '🎨',
-      tone: '💬',
-      rephrasing: '🔄',
+      grammar: 'G',
+      spelling: 'S',
+      style: 'ST',
+      tone: 'T',
+      rephrasing: 'R',
     };
-    return iconMap[type] || '💡';
+    return iconMap[type] || '•';
   };
 
   return (
@@ -152,14 +152,14 @@ export const SuggestionRenderer: React.FC<SuggestionRendererProps> = ({
                 onClick={() => onAccept(suggestion, index)}
                 title="Accept this suggestion"
               >
-                ✓ Accept
+                Accept
               </button>
               <button
                 className="action-btn reject"
                 onClick={() => onReject(index)}
                 title="Reject this suggestion"
               >
-                ✗ Reject
+                Reject
               </button>
             </div>
           </div>

@@ -33,11 +33,11 @@ def test_streaming_endpoint():
         )
 
         if response.status_code != 200:
-            print(f"\n✗ Error: HTTP {response.status_code}")
+            print(f"\nError: HTTP {response.status_code}")
             print(f"Response: {response.text}")
             return False
 
-        print(f"✓ Connected (HTTP {response.status_code})")
+        print(f"Connected (HTTP {response.status_code})")
         print(f"Content-Type: {response.headers.get('content-type')}")
         print("\nEvents received:")
         print("-" * 60)
@@ -54,15 +54,15 @@ def test_streaming_endpoint():
                     break
 
         print("\n" + "-" * 60)
-        print(f"✓ Streaming test completed ({event_count} lines received)")
+        print(f"Streaming test completed ({event_count} lines received)")
         return True
 
     except requests.exceptions.ConnectionError:
-        print("\n✗ Error: Could not connect to server")
+        print("\nError: Could not connect to server")
         print("  Make sure the FastAPI server is running on http://127.0.0.1:8001")
         return False
     except Exception as e:
-        print(f"\n✗ Error: {str(e)}")
+        print(f"\nError: {str(e)}")
         return False
 
 

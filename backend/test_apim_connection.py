@@ -34,7 +34,7 @@ async def test_apim_connection():
     print("=" * 70)
 
     if not all([endpoint, deployment, api_version, api_key]):
-        print("\n❌ ERROR: Missing required environment variables")
+        print("\nERROR: Missing required environment variables")
         print(
             "Please set: AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_DEPLOYMENT_NAME, AZURE_OPENAI_API_VERSION, AZURE_OPENAI_API_KEY"
         )
@@ -48,7 +48,7 @@ async def test_apim_connection():
             api_version=api_version,
         )
 
-        print("\n✓ Client initialized successfully")
+        print("\nClient initialized successfully")
         print(
             f"\nSending test request to: {endpoint}/openai/deployments/{deployment}/chat/completions"
         )
@@ -74,7 +74,7 @@ async def test_apim_connection():
         )
 
         print("\n" + "=" * 70)
-        print("✅ SUCCESS! Connection to APIM works correctly")
+        print("SUCCESS! Connection to APIM works correctly")
         print("=" * 70)
         print(f"\nResponse:")
         print(f"  Model: {response.model}")
@@ -82,20 +82,20 @@ async def test_apim_connection():
         print(
             f"  Tokens used: {response.usage.total_tokens if response.usage else 'N/A'}"
         )
-        print("\n✓ Your local environment is configured correctly!")
-        print("✓ The endpoint format matches the APIM portal test")
+        print("\nYour local environment is configured correctly!")
+        print("The endpoint format matches the APIM portal test")
 
         return True
 
     except Exception as e:
         print("\n" + "=" * 70)
-        print("❌ ERROR: Connection failed")
+        print("ERROR: Connection failed")
         print("=" * 70)
         print(f"\nError type: {type(e).__name__}")
         print(f"Error message: {str(e)}")
 
         # Provide helpful troubleshooting
-        print("\n🔧 Troubleshooting:")
+        print("\nTroubleshooting:")
         if "401" in str(e) or "Unauthorized" in str(e):
             print("  - Check your AZURE_OPENAI_API_KEY (subscription key from APIM)")
             print("  - In Azure portal, go to APIM → Subscriptions → copy the key")
@@ -150,11 +150,11 @@ async def test_streaming():
                 print(content, end="", flush=True)
                 chunk_count += 1
 
-        print(f"\n\n✅ Streaming works! Received {chunk_count} chunks")
+        print(f"\n\nStreaming works! Received {chunk_count} chunks")
         return True
 
     except Exception as e:
-        print(f"\n❌ Streaming test failed: {str(e)}")
+        print(f"\nStreaming test failed: {str(e)}")
         return False
 
 

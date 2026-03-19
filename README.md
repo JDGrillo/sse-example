@@ -2,51 +2,55 @@
 
 Real-time text correction web application powered by **Azure OpenAI GPT-4o** with streaming suggestions.
 
-## 🎯 Overview
+## Overview
 
 A modern web application that provides intelligent text correction suggestions as users type. The React frontend displays inline suggestions with smooth animations, while the Python FastAPI backend streams corrections from Azure OpenAI GPT-4o via APIM using Server-Sent Events.
 
 ### Key Features
 
-✅ **Real-time streaming suggestions** - Corrections appear progressively as the model generates them  
-✅ **Non-blocking UI** - Continue typing while the model processes previous text  
-✅ **Automatic request cancellation** - Previous requests cancelled when you keep typing  
-✅ **Staggered animations** - Suggestions cascade in smoothly (150ms delay between each)  
-✅ **Visual feedback** - Live chunk counter and streaming preview in dev mode  
-✅ **Accept/Reject controls** - Easy suggestion management with keyboard shortcuts  
-✅ **Smart debouncing** - 3-second delay prevents excessive API calls  
+- **Real-time streaming suggestions** - Corrections appear progressively as the model generates them  
+- **Non-blocking UI** - Continue typing while the model processes previous text  
+- **Automatic request cancellation** - Previous requests cancelled when you keep typing  
+- **Staggered animations** - Suggestions cascade in smoothly (150ms delay between each)  
+- **Visual feedback** - Live chunk counter and streaming preview in dev mode  
+- **Accept/Reject controls** - Easy suggestion management with keyboard shortcuts  
+- **Smart debouncing** - 3-second delay prevents excessive API calls  
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
-┌─────────────────┐
-│  React Frontend │
-│   (TypeScript)  │
-│                 │
-│  • TextEditor   │ ← User types text
-│  • StreamingClient │
-│  • SuggestionRenderer │
-└────────┬────────┘
-         │ HTTP POST /api/corrections/stream
-         │ (Server-Sent Events)
-         ▼
-┌─────────────────┐
-│ FastAPI Backend │
-│    (Python)     │
-│                 │
-│  • SSE Endpoint │
-│  • AgentService │
-└────────┬────────┘
-         │ AsyncAzureOpenAI
-         │ (APIM Authentication)
-         ▼
-┌─────────────────┐
-│ Azure OpenAI    │
-│    GPT-4o       │
-│  (via APIM)     │
-└─────────────────┘
+┌───────────────────────────┐
+│    React Frontend         │
+│    (TypeScript)           │
+│                           │
+│  • TextEditor             │ ← User types text
+│  • StreamingClient        │
+│  • SuggestionRenderer     │
+└─────────────┬─────────────┘
+              │
+              │ HTTP POST /api/corrections/stream
+              │ (Server-Sent Events)
+              │
+              ▼
+┌───────────────────────────┐
+│    FastAPI Backend        │
+│    (Python)               │
+│                           │
+│  • SSE Endpoint           │
+│  • AgentService           │
+└─────────────┬─────────────┘
+              │
+              │ AsyncAzureOpenAI
+              │ (APIM Authentication)
+              │
+              ▼
+┌───────────────────────────┐
+│    Azure OpenAI           │
+│    GPT-4o                 │
+│    (via APIM)             │
+└───────────────────────────┘
 ```
 
 ### Technology Stack
@@ -65,7 +69,7 @@ A modern web application that provides intelligent text correction suggestions a
 
 ---
 
-## 📦 Prerequisites
+## Prerequisites
 
 - **Python 3.10+** with pip
 - **Node.js 18+** with npm
@@ -74,7 +78,7 @@ A modern web application that provides intelligent text correction suggestions a
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Backend Setup
 
@@ -119,7 +123,7 @@ Frontend runs at: **http://localhost:3000**
 
 ---
 
-## 🎮 Usage
+## Usage
 
 1. **Open browser** to http://localhost:3000
 2. **Start typing** in the text area
@@ -134,23 +138,30 @@ Click **"Correct Text"** button to bypass debouncing and get immediate correctio
 
 ---
 
-## 🔄 Server-Sent Events Flow
+## Server-Sent Events Flow
 
 The application uses SSE for true streaming:
 
 ```
-User types → Debounce (3s) → POST to /api/corrections/stream
-                                    ↓
-                            Backend fetches from Azure OpenAI
-                                    ↓
-                            Chunks stream back via SSE:
-                            • event: start
-                            • event: chunk (multiple)
-                            • event: complete
-                            • event: close
-                                    ↓
-                            Frontend parses events → Updates UI
-                            Suggestions appear with cascade animation
+User types
+    ↓
+Debounce (3 seconds)
+    ↓
+POST to /api/corrections/stream
+    ↓
+Backend fetches from Azure OpenAI
+    ↓
+Chunks stream back via SSE:
+    • event: start
+    • event: chunk (multiple)
+    • event: complete
+    • event: close
+    ↓
+Frontend parses events
+    ↓
+Updates UI with suggestions
+    ↓
+Suggestions appear with cascade animation
 ```
 
 ### Event Types
@@ -163,24 +174,24 @@ User types → Debounce (3s) → POST to /api/corrections/stream
 
 ---
 
-## 🎨 Recent Improvements
+## Recent Improvements
 
 ### v1.1 - Non-Blocking UI (March 2026)
 
 **Problem:** Textarea locked during processing, suggestions appeared all at once
 
 **Solution:**
-1. ✅ Removed `disabled` attribute from textarea
-2. ✅ Implemented request cancellation when user continues typing
-3. ✅ Added staggered animations (150ms delay per suggestion)
-4. ✅ Enhanced visual feedback with chunk counters
-5. ✅ Added live streaming preview (dev mode)
+1. Removed `disabled` attribute from textarea
+2. Implemented request cancellation when user continues typing
+3. Added staggered animations (150ms delay per suggestion)
+4. Enhanced visual feedback with chunk counters
+5. Added live streaming preview (dev mode)
 
 **Impact:**
 - Truly async/non-blocking experience
 - No more "frozen" feeling during API calls
 - Smooth cascading suggestion appearance
-- Console logs: "🚫 Cancelled previous request - user is still typing"
+- Console logs: "Cancelled previous request - user is still typing"
 
 ### Technical Details
 
@@ -189,7 +200,7 @@ User types → Debounce (3s) → POST to /api/corrections/stream
 // When user types again, abort previous stream
 if (abortControllerRef.current) {
   abortControllerRef.current.abort();
-  console.log('🚫 Cancelled previous request - user is still typing');
+  console.log('Cancelled previous request - user is still typing');
 }
 ```
 
@@ -208,7 +219,7 @@ const controller = await streamingAPIClient.streamCorrections(...);
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 suggestion-streaming/
@@ -248,7 +259,7 @@ suggestion-streaming/
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### Backend Environment Variables
 
@@ -273,7 +284,7 @@ The frontend automatically proxies `/api/*` requests to `http://localhost:8000` 
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Frontend won't start
 
@@ -306,7 +317,7 @@ taskkill /PID <pid> /F
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Manual Testing Checklist
 
@@ -323,18 +334,18 @@ taskkill /PID <pid> /F
 
 ### Validation Status
 
-✅ **Integration Testing** - Completed (March 17, 2026)
+**Integration Testing** - Completed (March 17, 2026)
 - Status: Pass with minor issues
 - All core features validated
 - Code quality: Good
 - See: `docs/plan/text-correction-app-001/logs/task-validator_integration-testing_20260317_120000.yaml`
 
-⏳ **Browser Testing** - Pending
-⏳ **Documentation** - In Progress
+**Browser Testing** - Pending  
+**Documentation** - In Progress
 
 ---
 
-## 📊 Performance
+## Performance
 
 - **Debounce delay:** 3 seconds (configurable in `TextEditor.tsx`)
 - **Animation stagger:** 150ms per suggestion (inline), 100ms (sidebar)
@@ -343,7 +354,7 @@ taskkill /PID <pid> /F
 
 ---
 
-## 🔐 Security Notes
+## Security Notes
 
 - **API keys** stored in `.env` (never commit!)
 - **CORS** restricted to localhost in development
@@ -352,7 +363,7 @@ taskkill /PID <pid> /F
 
 ---
 
-## 🚧 Known Limitations
+## Known Limitations
 
 1. **Local deployment only** - Azure deployment not implemented
 2. **No automated tests** - Manual testing only (unit tests planned)
@@ -361,7 +372,7 @@ taskkill /PID <pid> /F
 
 ---
 
-## 📝 Contributing
+## Contributing
 
 ### Code Style
 
@@ -372,19 +383,19 @@ taskkill /PID <pid> /F
 
 1. **Lazy logging:** Replace f-strings with `%` formatting
    ```python
-   # ❌ Bad
+   # Bad
    logger.info(f"Value: {x}")
    
-   # ✅ Good
+   # Good
    logger.info("Value: %s", x)
    ```
 
 2. **Specific exceptions:** Catch specific types instead of `Exception`
    ```python
-   # ❌ Bad
+   # Bad
    except Exception as e:
    
-   # ✅ Good
+   # Good
    except (json.JSONDecodeError, httpx.HTTPError) as e:
    ```
 
@@ -405,7 +416,7 @@ Copyright © 2026. All rights reserved.
 
 ---
 
-## 🙋‍♂️ Support
+## Support
 
 For issues or questions, check:
 1. This README's troubleshooting section
@@ -415,6 +426,6 @@ For issues or questions, check:
 
 ---
 
-**Status:** ✅ Core implementation complete | ⏳ Browser testing pending  
+**Status:** Core implementation complete | Browser testing pending  
 **Last Updated:** March 17, 2026  
 **Validated By:** task-validator agent

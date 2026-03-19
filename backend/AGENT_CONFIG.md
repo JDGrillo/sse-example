@@ -84,15 +84,15 @@ Expected output:
 ============================================================
 Testing Foundry Connection
 ============================================================
-✓ Foundry connection validated successfully
-✓ Connection test PASSED
+Foundry connection validated successfully
+Connection test PASSED
 
 ============================================================
 Testing Streaming Corrections
 ============================================================
 [streaming correction output...]
-✓ Streaming completed
-✓ Streaming test PASSED
+Streaming completed
+Streaming test PASSED
 ```
 
 ## Troubleshooting

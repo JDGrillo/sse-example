@@ -29,10 +29,10 @@ async def test_connection():
     is_valid = await agent_service.validate_connection()
 
     if is_valid:
-        logger.info("✓ Connection test PASSED")
+        logger.info("Connection test PASSED")
         return True
     else:
-        logger.error("✗ Connection test FAILED")
+        logger.error("Connection test FAILED")
         return False
 
 
@@ -64,21 +64,21 @@ async def test_streaming_corrections():
             elif chunk.get("type") == "complete":
                 print("\n")  # New line after completion
                 logger.info(
-                    f"\n✓ Streaming completed. Total chunks: {chunk.get('total_chunks')}"
+                    f"\nStreaming completed. Total chunks: {chunk.get('total_chunks')}"
                 )
             elif chunk.get("type") == "error":
-                logger.error(f"\n✗ Error: {chunk.get('error')}")
+                logger.error(f"\nError: {chunk.get('error')}")
                 return False
 
         if chunks_received > 0:
-            logger.info("✓ Streaming test PASSED")
+            logger.info("Streaming test PASSED")
             return True
         else:
-            logger.warning("⚠ No chunks received")
+            logger.warning("No chunks received")
             return False
 
     except Exception as e:
-        logger.error(f"✗ Streaming test FAILED: {str(e)}", exc_info=True)
+        logger.error(f"Streaming test FAILED: {str(e)}", exc_info=True)
         return False
 
 
@@ -92,7 +92,7 @@ async def main():
     connection_ok = await test_connection()
 
     if not connection_ok:
-        logger.error("\n⚠ Skipping streaming test due to connection failure")
+        logger.error("\nSkipping streaming test due to connection failure")
         logger.error("\nPlease ensure:")
         logger.error("  1. FOUNDRY_PROJECT_ENDPOINT is set in .env")
         logger.error("  2. FOUNDRY_MODEL_DEPLOYMENT_NAME is set in .env")
@@ -109,15 +109,15 @@ async def main():
     logger.info("\n" + "=" * 60)
     logger.info("Test Summary")
     logger.info("=" * 60)
-    logger.info(f"  Connection:        {'✓ PASS' if connection_ok else '✗ FAIL'}")
-    logger.info(f"  Streaming:         {'✓ PASS' if streaming_ok else '✗ FAIL'}")
+    logger.info(f"  Connection:        {'PASS' if connection_ok else 'FAIL'}")
+    logger.info(f"  Streaming:         {'PASS' if streaming_ok else 'FAIL'}")
     logger.info("=" * 60)
 
     if connection_ok and streaming_ok:
-        logger.info("\n✓ All tests passed!")
+        logger.info("\nAll tests passed!")
         sys.exit(0)
     else:
-        logger.error("\n✗ Some tests failed")
+        logger.error("\nSome tests failed")
         sys.exit(1)
 
 

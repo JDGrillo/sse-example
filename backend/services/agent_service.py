@@ -90,13 +90,11 @@ class AgentService:
             )
 
             if response and response.choices:
-                logger.info("✓ Azure OpenAI (APIM) connection validated successfully")
+                logger.info("Azure OpenAI (APIM) connection validated successfully")
                 return True
             return False
         except Exception as e:
-            logger.error(
-                "✗ Azure OpenAI (APIM) connection validation failed: %s", str(e)
-            )
+            logger.error("Azure OpenAI (APIM) connection validation failed: %s", str(e))
             return False
 
     async def stream_corrections(
@@ -165,7 +163,7 @@ Provide your response in the structured JSON format specified in your instructio
                             "chunk_number": chunk_count,
                         }
 
-            logger.info("✓ Streaming completed. Total chunks: %d", chunk_count)
+            logger.info("Streaming completed. Total chunks: %d", chunk_count)
 
             # Parse and validate the JSON response
             try:
@@ -185,7 +183,7 @@ Provide your response in the structured JSON format specified in your instructio
                         parsed_response = {"corrections": []}
 
                 logger.info(
-                    "✓ Parsed %d corrections",
+                    "Parsed %d corrections",
                     len(parsed_response.get("corrections", [])),
                 )
 
@@ -206,7 +204,7 @@ Provide your response in the structured JSON format specified in your instructio
                 }
 
         except Exception as e:
-            logger.error("✗ Error in stream_corrections: %s", str(e), exc_info=True)
+            logger.error("Error in stream_corrections: %s", str(e), exc_info=True)
             yield {
                 "type": "error",
                 "error": str(e),

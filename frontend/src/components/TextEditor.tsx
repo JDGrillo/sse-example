@@ -343,13 +343,13 @@ export const TextEditor: React.FC<TextEditorProps> = ({
 
     const getTypeIcon = (type: Correction['type']) => {
       const iconMap = {
-        grammar: '📝',
-        spelling: '✏️',
-        style: '🎨',
-        tone: '💬',
-        rephrasing: '🔄',
+        grammar: 'G',
+        spelling: 'S',
+        style: 'ST',
+        tone: 'T',
+        rephrasing: 'R',
       };
-      return iconMap[type] || '💡';
+      return iconMap[type] || '•';
     };
 
     return (
@@ -418,7 +418,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
               setTooltipPosition(null);
             }}
           >
-            ✓ Accept
+            Accept
           </button>
           <button 
             className="card-action-btn reject"
@@ -430,7 +430,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
               setTooltipPosition(null);
             }}
           >
-            ✗ Dismiss
+            Dismiss
           </button>
         </div>
       </div>
