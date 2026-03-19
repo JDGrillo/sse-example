@@ -1,0 +1,317 @@
+.suggestion-renderer {
+  margin-top: 30px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.suggestion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px; /* Reduced margin */
+  padding-bottom: 12px; /* Reduced padding */
+  border-bottom: 1px solid #e8e8e8; /* Lighter border */
+}
+
+.suggestion-header h3 {
+  margin: 0;
+  font-size: 18px; /* Slightly smaller */
+  color: #444; /* Softer color */
+  font-weight: 600;
+}
+
+.bulk-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.bulk-action-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.bulk-action-btn.accept-all {
+  background-color: #27ae60;
+  color: white;
+}
+
+.bulk-action-btn.accept-all:hover {
+  background-color: #229954;
+  transform: translateY(-1px);
+}
+
+.bulk-action-btn.reject-all {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.bulk-action-btn.reject-all:hover {
+  background-color: #c0392b;
+  transform: translateY(-1px);
+}
+
+.suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Reduced gap for tighter layout */
+}
+
+.suggestion-item {
+  display: flex;
+  gap: 12px;
+  padding: 15px; /* Reduced padding */
+  background-color: #ffffff;
+  border: 1px solid #e8e8e8; /* Lighter border */
+  border-radius: 6px; /* Less rounded */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); /* Subtler shadow */
+  transition: all 0.2s ease;
+}
+
+.suggestion-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Less dramatic hover */
+  border-color: #d0d0d0;
+  transform: translateY(-1px); /* Subtle lift */
+}
+
+.suggestion-item.expanded {
+  background-color: #f9f9f9;
+}
+
+/* Staggered animation for new suggestions appearing */
+.suggestion-item.suggestion-item-appear {
+  animation: suggestionSlideIn 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+@keyframes suggestionSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.suggestion-type-indicator {
+  flex-shrink: 0;
+}
+
+.type-badge {
+  display: inline-block;
+  padding: 4px 10px; /* More compact */
+  font-size: 11px; /* Smaller */
+  font-weight: 600;
+  color: white;
+  border-radius: 12px; /* Less rounded */
+  text-transform: capitalize;
+  white-space: nowrap;
+  opacity: 0.9; /* Slightly muted */
+}
+
+.suggestion-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.text-comparison {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Reduced gap */
+  margin-bottom: 8px; /* Less margin */
+  flex-wrap: wrap;
+}
+
+.original-text,
+.suggested-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.label {
+  font-size: 10px; /* Smaller */
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #888; /* Lighter */
+  letter-spacing: 0.5px;
+}
+
+.text {
+  font-size: 14px; /* Slightly smaller */
+  line-height: 1.4;
+  padding: 6px 10px; /* More compact */
+  border-radius: 4px;
+  background-color: #f8f8f8; /* More subtle */
+}
+
+.original-text .text {
+  background-color: #fff5f5; /* More subtle red */
+  border-left: 2px solid #ff6b6b; /* Thinner border */
+}
+
+.strikethrough {
+  text-decoration: line-through;
+  text-decoration-color: #ff6b6b;
+  text-decoration-thickness: 1.5px; /* Thinner */
+  color: #888; /* Lighter */
+}
+
+.suggested-text .text {
+  background-color: #f0f8f0; /* More subtle green */
+  border-left: 2px solid #51cf66; /* Thinner border */
+  color: #2d6e2d; /* Softer green */
+  font-weight: 500;
+}
+
+.arrow {
+  font-size: 20px; /* Smaller */
+  color: #bbb; /* Lighter */
+  flex-shrink: 0;
+}
+
+.explanation {
+  margin-top: 10px; /* Less space */
+  padding: 10px 12px; /* More compact */
+  background-color: #f8fafc; /* More subtle */
+  border-left: 2px solid #3498db; /* Thinner */
+  border-radius: 4px;
+  animation: fadeIn 0.2s ease-out;
+  font-size: 13px; /* Smaller text */
+  color: #555; /* Softer color */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 200px;
+  }
+}
+
+.explanation p {
+  margin: 0;
+  font-size: 13px; /* Smaller */
+  line-height: 1.5; /* Tighter */
+  color: #555; /* Softer */
+}
+
+.toggle-explanation {
+  margin-top: 8px; /* Reduced */
+  padding: 4px 10px; /* More compact */
+  font-size: 11px; /* Smaller */
+  background: none;
+  border: 1px solid #e0e0e0; /* Lighter */
+  border-radius: 4px;
+  color: #888; /* Lighter */
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toggle-explanation:hover {
+  background-color: #fafafa; /* More subtle */
+  border-color: #ccc;
+}
+
+.suggestion-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  padding: 8px 16px; /* More compact */
+  font-size: 13px; /* Smaller */
+  font-weight: 600;
+  border: none;
+  border-radius: 5px; /* Slightly less rounded */
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.action-btn.accept {
+  background-color: #27ae60;
+  color: white;
+}
+
+.action-btn.accept:hover {
+  background-color: #229954;
+  box-shadow: 0 2px 6px rgba(39, 174, 96, 0.2); /* More subtle shadow */
+}
+
+.action-btn.reject {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.action-btn.reject:hover {
+  background-color: #c0392b;
+  box-shadow: 0 2px 6px rgba(231, 76, 60, 0.2); /* More subtle shadow */
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .suggestion-item {
+    flex-direction: column;
+  }
+
+  .suggestion-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .text-comparison {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .arrow {
+    transform: rotate(90deg);
+  }
+
+  .bulk-actions {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .bulk-action-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+/* Empty state (handled by not rendering, but if needed) */
+.no-suggestions {
+  padding: 40px 20px;
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+}
