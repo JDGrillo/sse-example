@@ -10,6 +10,7 @@ from fastapi.responses import JSONResponse
 
 from config import settings
 from routes import corrections_router
+from middleware import SecurityHeadersMiddleware, RateLimitMiddleware
 
 # Configure logging
 logging.basicConfig(
@@ -45,6 +46,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Add security middleware
+app.add_middleware(SecurityHeadersMiddleware)
+app.add_middleware(RateLimitMiddleware, requests_per_minute=60)
 
 # Include routers
 app.include_router(corrections_router)
